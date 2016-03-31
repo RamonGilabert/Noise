@@ -15,6 +15,7 @@ class ViewController: UIViewController {
                           width: 150, height: 150)
     orange.layer.cornerRadius = 5
     orange.backgroundColor = UIColor.orangeColor()
+    orange.noise()
 
     view.addSubview(orange)
   }
