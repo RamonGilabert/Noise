@@ -1,0 +1,16 @@
+PODS:
+  - Noise (0.1.0)
+
+DEPENDENCIES:
+  - Noise (from `../../`)
+
+EXTERNAL SOURCES:
+  Noise:
+    :path: ../../
+
+SPEC CHECKSUMS:
+  Noise: b777697db32b161295440595a7e1de83cab9545a
+
+PODFILE CHECKSUM: 5cfeda86cbde8d86b9c920aa51131eac693b76f7
+
+COCOAPODS: 1.0.0.beta.6
