@@ -32,6 +32,8 @@ extension UIView {
 struct Noise {
 
   static func background(view: UIView, _ alpha: CGFloat = 0.2, _ blend: CGBlendMode = .Overlay) {
+    guard view.backgroundColor != nil && view.frame != CGRectZero else { return }
+
     let frame = view.bounds
     UIGraphicsBeginImageContextWithOptions(frame.size, true, 0)
 
@@ -44,34 +46,29 @@ struct Noise {
     let image = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
 
-    view.backgroundColor = UIColor(patternImage: image)
+    if let image = image {
+      view.backgroundColor = UIColor(patternImage: image)
+    }
   }
 
   static func buildNoise(alpha: CGFloat, _ blend: CGBlendMode = .Overlay) {
-    struct Static {
-      static var token: dispatch_once_t = 0
-    }
-
+    let width = 128
+    let size = width * width
+    let bitmapData = UnsafeMutablePointer<CChar>(malloc(size))
     var imageReference: CGImage? = nil
 
-    dispatch_once(&Static.token) {
-      let width = 128
-      let size = width * width
-      let bitmapData = UnsafeMutablePointer<CChar>(malloc(size))
-
-      for i in 0 ..< size {
-        let value = arc4random() % 256
-        bitmapData[i] = CChar(bitPattern: UInt8(value))
-      }
-
-      let colorSpace = CGColorSpaceCreateDeviceGray()
-      let bitmapContext = CGBitmapContextCreate(
-        bitmapData, width, width, 8, width, colorSpace, CGImageAlphaInfo.None.rawValue)
-
-      imageReference = CGBitmapContextCreateImage(bitmapContext)
-
-      free(bitmapData)
+    for i in 0 ..< size {
+      let value = arc4random() % 256
+      bitmapData[i] = CChar(bitPattern: UInt8(value))
     }
+
+    let colorSpace = CGColorSpaceCreateDeviceGray()
+    let bitmapContext = CGBitmapContextCreate(
+      bitmapData, width, width, 8, width, colorSpace, CGImageAlphaInfo.None.rawValue)
+
+    imageReference = CGBitmapContextCreateImage(bitmapContext)
+
+    free(bitmapData)
 
     let context = UIGraphicsGetCurrentContext()
 
