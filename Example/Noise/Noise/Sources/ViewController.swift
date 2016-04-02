@@ -9,14 +9,26 @@ class ViewController: UIViewController {
     view.backgroundColor = UIColor.whiteColor()
 
     let totalSize = UIScreen.mainScreen().bounds
-    let orange = UIView()
+    let orange = NoiseView()
     orange.frame = CGRect(x: (totalSize.width - 150) / 2,
                           y: (totalSize.height - 300) / 2,
                           width: 150, height: 150)
     orange.layer.cornerRadius = 5
     orange.backgroundColor = UIColor.orangeColor()
-    orange.noise()
 
     view.addSubview(orange)
+  }
+}
+
+class NoiseView: UIView {
+
+  override func drawRect(rect: CGRect) {
+    super.drawRect(rect)
+
+    let context = UIGraphicsGetCurrentContext()
+    backgroundColor?.setFill()
+    CGContextFillRect(context, bounds);
+
+    buildNoise()
   }
 }
