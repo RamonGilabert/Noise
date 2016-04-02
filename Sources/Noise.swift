@@ -1,5 +1,14 @@
 import UIKit
 
+/**
+ Noise is a function that creates noise to a given view.
+
+ - Parameter view: The view the noise should be applied to.
+ - Parameter alpha: The alpha of the noise (defaults to 0.2).
+ - Parameter blend: A CGBlendMode that will apply to the view (defaults to Overlay).
+
+ The function returns the same view as is but with a random overlay changing basically the color of the view.
+ */
 public func noise(view: UIView, alpha: CGFloat = 0.2, blend: CGBlendMode = .Overlay) {
 
   Noise.background(view, alpha, blend)
@@ -7,7 +16,15 @@ public func noise(view: UIView, alpha: CGFloat = 0.2, blend: CGBlendMode = .Over
 
 extension UIView {
 
-  public func noise(alpha alpha: CGFloat = 0.2, _ blend: CGBlendMode = .Overlay) {
+  /**
+   Noise is a function that creates noise to a given view.
+
+   - Parameter alpha: The alpha of the noise (defaults to 0.2).
+   - Parameter blend: A CGBlendMode that will apply to the view (defaults to Overlay).
+
+   The function returns the same view as is but with a random overlay changing basically the color of the view.
+   */
+  public func noise(alpha alpha: CGFloat = 0.2, blend: CGBlendMode = .Overlay) {
     Noise.background(self, alpha, blend)
   }
 }
@@ -43,7 +60,7 @@ struct Noise {
       let bitmapData = UnsafeMutablePointer<CChar>(malloc(size))
 
       for i in 0 ..< size {
-        let value = arc4random_uniform(128) % 256
+        let value = arc4random() % 256
         bitmapData[i] = CChar(bitPattern: UInt8(value))
       }
 
@@ -59,8 +76,8 @@ struct Noise {
     let context = UIGraphicsGetCurrentContext()
 
     CGContextSaveGState(context)
-    CGContextSetAlpha(context, 0.2)
-    CGContextSetBlendMode(context, .Overlay)
+    CGContextSetAlpha(context, alpha)
+    CGContextSetBlendMode(context, blend)
 
     let frame = CGRect(x: 0, y: 0,
                        width: CGImageGetWidth(imageReference),
