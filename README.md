@@ -38,7 +38,7 @@ github "RamonGilabert/Noise"
 
 ## Author
 
-Ramon Gilabert, ramon@hyper.no
+Ramon Gilabert, ramon.gilabert.llop@gmail.com
 
 ## Contributing
 
